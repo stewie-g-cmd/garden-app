@@ -1,26 +1,40 @@
+/**
+ * Interactive Garden Advice Generator
+ */
+
+const ADVICE_DATABASE = {
+  seasons: {
+    summer: "Water your plants regularly and provide some shade.\n",
+    winter: "Protect your plants from frost with covers.\n",
+    spring: "Prepare your soil and start planting seeds for summer bloom.\n",
+    autumn: "Clear fallen leaves and prune perennial branches.\n"
+  },
+  plants: {
+    flower: "Use fertiliser to encourage blooms.",
+    vegetable: "Keep an eye out for pests!",
+    herb: "Ensure plenty of sunlight and harvest regularly."
+  }
+};
+
+/**
+ * Retrieves advice based on user inputs
+ * @param {string} season 
+ * @param {string} plantType 
+ * @returns {string} Combined advice string
+ */
 function getGardeningAdvice(season, plantType) {
-    let advice = "";
+  const normalizedSeason = season ? season.toLowerCase().trim() : "";
+  const normalizedPlant = plantType ? plantType.toLowerCase().trim() : "";
 
-    if (season === "summer") {
-        advice += "Water your plants regularly and provide some shade.\n";
-    } else if (season === "winter") {
-        advice += "Protect your plants from frost with covers.\n";
-    } else {
-        advice += "No advice for this season.\n";
-    }
+  let advice = "";
 
-    if (plantType === "flower") {
-        advice += "Use fertiliser to encourage blooms.";
-    } else if (plantType === "vegetable") {
-        advice += "Keep an eye out for pests!";
-    } else {
-        advice += "No advice for this type of plant.";
-    }
+  advice += ADVICE_DATABASE.seasons[normalizedSeason] || "No advice for this season.\n";
+  advice += ADVICE_DATABASE.plants[normalizedPlant] || "No advice for this type of plant.";
 
-    return advice;
+  return advice;
 }
 
-const season = prompt("Enter season:") || "summer";
-const plantType = prompt("Enter plant type:") || "flower";
+const userSeason = prompt("Enter a season (e.g., summer, winter, spring, autumn):") || "summer";
+const userPlantType = prompt("Enter a plant type (e.g., flower, vegetable, herb):") || "flower";
 
-console.log(getGardeningAdvice(season, plantType));
+console.log(getGardeningAdvice(userSeason, userPlantType));
